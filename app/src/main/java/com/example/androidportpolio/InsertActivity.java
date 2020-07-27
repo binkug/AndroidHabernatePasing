@@ -38,6 +38,7 @@ public class InsertActivity extends AppCompatActivity {
                 //upload할 주소 만들기
                 URL url = new URL("http://192.168.0.117:9000/activity/insert");
                 //서버에게 넘겨줄 문자열 파라미터 생성
+                //user_email을 설정해 준 이유는 아직 user_email을 받아 올 수 없어서 직접 설정해 줬다.
                 String user_email = "PncQZK8LD1Lf+/LlORX+haAqcb9DeZQjrPRnoJYr8Skuf9FVm8LIqfTClXYdPeYXz6ndcI67b8vyW8ATC9uvH/NZ7U8=";
                 String [] data = {user_email,activity_subject.getText().toString().trim(),activity_type.getText().toString().trim(),activity_content.getText().toString().trim()};
                 String [] dataName = {"user_email","activity_subject","activity_type","activity_content"};
