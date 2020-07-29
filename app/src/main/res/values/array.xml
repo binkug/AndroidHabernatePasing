@@ -9,4 +9,30 @@
         <item>제목 또는 아이디</item>
     </string-array>
 
+    <string-array name="gender">
+        <item>남자</item>
+        <item>여자</item>
+        <item>기타</item>
+    </string-array>
+
+    <string-array name="pl">
+        <item>Machine Language</item>
+        <item>Assembly</item>
+        <item>C&amp;C++</item>
+        <item>Java</item>
+        <item>Python</item>
+        <item>JavaScript</item>
+        <item>C#</item>
+        <item>Objective-C</item>
+        <item>Swift</item>
+        <item>Kotlin</item>
+        <item>Go</item>
+        <item>Scala</item>
+        <item>Ruby</item>
+        <item>VB</item>
+        <item>Closure</item>
+        <item>Haskell</item>
+
+    </string-array>
+
 </resources>
