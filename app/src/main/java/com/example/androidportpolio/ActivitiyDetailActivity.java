@@ -3,6 +3,7 @@ package com.example.androidportpolio;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -10,6 +11,8 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -27,6 +30,7 @@ public class ActivitiyDetailActivity extends AppCompatActivity {
     //화면에 사용할 뷰
     TextView activity_subject,activity_content,activity_type;
     ImageView activity_image;
+
 
     //텍스트 데이터를 웹에서 다운로드 받아서 출력
     //다운로드 -> 파싱 -> 출력
@@ -97,8 +101,12 @@ public class ActivitiyDetailActivity extends AppCompatActivity {
             //텍스트 데이터 다운로드
             StringBuilder sb = new StringBuilder();
             try {
+                //호출하는 인텐트 가져오기
+                Intent intent = getIntent();
+                //액티비티넘의 값을 정수로 가져오고 없을 때 1
+                int activity_num = intent.getIntExtra("activity_num",1);
                 //URL 만들기
-                URL url = new URL("http://192.168.0.117:9000/activity/detail?activity_num="+6);
+                URL url = new URL("http://192.168.0.117:9000/activity/detail?activity_num="+activity_num);
 
                 //Connection 객체 만들기
                 HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -171,5 +179,15 @@ public class ActivitiyDetailActivity extends AppCompatActivity {
         activity_content = (TextView)findViewById(R.id.activity_content);
         activity_type = (TextView)findViewById(R.id.activity_type);
         activity_image = (ImageView) findViewById(R.id.activity_image);
+
+        Button backbtn = (Button)findViewById(R.id.backbtn);
+
+        backbtn.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //현재 엑티비티 종료
+                finish();
+            }
+        });
     }
 }

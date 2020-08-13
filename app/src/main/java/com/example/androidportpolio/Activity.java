@@ -7,6 +7,7 @@ public class Activity {
     public String user_email; //유저 이메일
     public String activity_subject; //활동 제목
     public String activity_type; //활동 타입
+    public String user_name;
     public Date activity_start_date_local; //활동 시작 시간
     public Date activity_elapsed_time; //활동 경과 시간
     public String activity_content;  //활동 내용

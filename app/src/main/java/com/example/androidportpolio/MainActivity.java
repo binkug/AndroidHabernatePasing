@@ -3,6 +3,7 @@ package com.example.androidportpolio;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -86,22 +87,22 @@ public class MainActivity extends AppCompatActivity {
             try{
                 URL url = null;
                 //콤보 박스 선택한 항목 번호를 idx에 저장
-                int idx = searchtype.getSelectedItemPosition();
-                if(idx == 0){
-                    url = new URL(
-                            "http://192.168.0.117:9000/activity/list?" +
-                                    "pageno=" + pageNo);
-                }else if(idx == 1){
+                    int idx = searchtype.getSelectedItemPosition();
+                    if(idx == 0){
+                        url = new URL(
+                                "http://192.168.0.117:9000/activity/list?" +
+                                        "pageno=" + pageNo);
+                    }else if(idx == 1){
+                        url = new URL(
+                                "http://192.168.0.117:9000/activity/list?"
+                                        + "searchtype=activity_subject&" + "value=" +
+                                        value.getText().toString() + "&pageno="
+                                        +pageNo
+                        );
+                    }else if(idx == 2){
                     url = new URL(
                             "http://192.168.0.117:9000/activity/list?"
-                                    + "searchtype=activity_subject&" + "value=" +
-                                    value.getText().toString() + "&pageno="
-                                    +pageNo
-                    );
-                }else if(idx == 2){
-                    url = new URL(
-                            "http://192.168.0.117:9000/activity/list?"
-                                    + "searchtype=user_email&" + "value=" +
+                                    + "searchtype=user_name&" + "value=" +
                                     value.getText().toString() + "&pageno="
                                     +pageNo
                     );
@@ -144,10 +145,12 @@ public class MainActivity extends AppCompatActivity {
                     //result = result + temp.getString(1) + "\n";
                     //ListView를 이용해서 데이터 출력하기
                     Activity activity = new Activity();
-                    activity.activity_num = temp.getInt(0);
-                    activity.user_email = temp.getString(1);
+                    activity.user_email = temp.getString(0);
+                    activity.activity_num = temp.getInt(4);
+                    //activity.user_name = temp.getString(1);
                     activity.activity_subject = temp.getString(2);
                     activity.activity_type = temp.getString(3);
+                    //if("activity_subject".equals(searchtype))
 
                     //list.add(activity);
                     list.add(0,activity);
@@ -199,7 +202,14 @@ public class MainActivity extends AppCompatActivity {
                 //선택한 항목의 데이터
                 Activity activity = list.get(i);
                 //토스트로 activitynum을 출력
-                Toast.makeText(MainActivity.this,activity.activity_num+"",Toast.LENGTH_LONG).show();
+              /*  Toast.makeText(MainActivity.this,activity.activity_num+"",Toast.LENGTH_LONG).show();*/
+
+                //하위 Activity 출력
+                Intent intent = new Intent(MainActivity.this,ActivitiyDetailActivity.class);
+                //데이터 전달하기 - activity_num을 전달
+                intent.putExtra("activity_num",activity.activity_num);
+                //액티비티 호출
+                startActivity(intent);
             }
         });
         //ListView의 항목 애니메이션 설정
@@ -276,7 +286,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onResume(){
         super.onResume();
-        new ThreadEx().start();
-        ind.setVisibility(View.INVISIBLE);
+        //데이터가 없을 때만 데이터를 가져오기
+        if(list == null || list.size() < 1){
+            new ThreadEx().start();
+            ind.setVisibility(View.INVISIBLE);
+        }
+
     }
 }
